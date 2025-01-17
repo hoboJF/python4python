@@ -9,7 +9,12 @@ Your response should ONLY contain the appropriate word and nothing else."""
 
 def index(request):
     project_root = Path(__file__).resolve().parent
-    image_path = project_root / 'test3.jpg'
+    image_path = project_root / 'test2.jpg'
+    response = llama_call(image_path)
+    print(response)
+    return render(request, 'imageRecognition/index.html')
+
+def llama_call(image_path):
     response = ollama.chat(
         model = 'llama3.2-vision',
         messages=[{
@@ -18,5 +23,4 @@ def index(request):
             'images' : [str(image_path)]
         }]
     )
-    print(response)
-    return render(request, 'imageRecognition/index.html')
+    return response
